@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace EveryWorkflow\CustomerBundle\Controller\Admin;
+namespace EveryWorkflow\CustomerBundle\Controller;
 
-use EveryWorkflow\CoreBundle\Annotation\EWFRoute;
+use EveryWorkflow\CoreBundle\Annotation\EwRoute;
 use EveryWorkflow\CustomerBundle\DataGrid\CustomerDataGridInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,17 +23,17 @@ class ListCustomerController extends AbstractController
         $this->customerDataGrid = $customerDataGrid;
     }
 
-    /**
-     * @EWFRoute(
-     *     admin_api_path="customer",
-     *     name="admin.customer",
-     *     priority=10,
-     *     methods="GET"
-     * )
-     */
+    #[EwRoute(
+        path: "customer",
+        name: 'customer',
+        priority: 10,
+        methods: 'GET',
+        permissions: 'customer.list',
+        swagger: true
+    )]
     public function __invoke(Request $request): JsonResponse
     {
         $dataGrid = $this->customerDataGrid->setFromRequest($request);
-        return (new JsonResponse())->setData($dataGrid->toArray());
+        return new JsonResponse($dataGrid->toArray());
     }
 }

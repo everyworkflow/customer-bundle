@@ -6,13 +6,12 @@
 
 declare(strict_types=1);
 
-namespace EveryWorkflow\CustomerBundle\Controller\Admin;
+namespace EveryWorkflow\CustomerBundle\Controller;
 
-use EveryWorkflow\CoreBundle\Annotation\EWFRoute;
+use EveryWorkflow\CoreBundle\Annotation\EwRoute;
 use EveryWorkflow\CustomerBundle\Repository\CustomerRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class GetCustomerController extends AbstractController
 {
@@ -23,16 +22,22 @@ class GetCustomerController extends AbstractController
         $this->customerRepository = $customerRepository;
     }
 
-    /**
-     * @EWFRoute(
-     *     admin_api_path="customer/{uuid}",
-     *     defaults={"uuid"="create"},
-     *     name="admin.customer.view",
-     *     methods="GET"
-     * )
-     * @throws \Exception
-     */
-    public function __invoke(string $uuid, Request $request): JsonResponse
+    #[EwRoute(
+        path: "customer/{uuid}",
+        name: 'customer.view',
+        methods: 'GET',
+        permissions: 'customer.view',
+        swagger: [
+            'parameters' => [
+                [
+                    'name' => 'uuid',
+                    'in' => 'path',
+                    'default' => 'create',
+                ]
+            ]
+        ]
+    )]
+    public function __invoke(string $uuid = 'create'): JsonResponse
     {
         $data = [];
 
@@ -45,6 +50,6 @@ class GetCustomerController extends AbstractController
 
         $data['data_form'] = $this->customerRepository->getForm()->toArray();
 
-        return (new JsonResponse())->setData($data);
+        return new JsonResponse($data);
     }
 }

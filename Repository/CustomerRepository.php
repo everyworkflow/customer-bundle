@@ -8,16 +8,16 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\CustomerBundle\Repository;
 
-use EveryWorkflow\CoreBundle\Annotation\RepoDocument;
 use EveryWorkflow\CustomerBundle\Entity\CustomerEntity;
 use EveryWorkflow\EavBundle\Repository\BaseEntityRepository;
+use EveryWorkflow\EavBundle\Support\Attribute\EntityRepositoryAttribute;
 
-/**
- * @RepoDocument(doc_name=CustomerEntity::class)
- */
+#[EntityRepositoryAttribute(
+    documentClass: CustomerEntity::class,
+    primaryKey: 'email',
+    entityCode: 'customer'
+)]
 class CustomerRepository extends BaseEntityRepository implements CustomerRepositoryInterface
 {
-    protected string $collectionName = 'customer_entity_collection';
-    protected array $indexNames = ['email'];
-    protected string $entityCode = 'customer';
+    // Something
 }
