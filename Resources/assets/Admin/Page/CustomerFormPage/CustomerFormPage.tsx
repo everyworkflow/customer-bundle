@@ -22,7 +22,7 @@ const SUBMIT_SAVE_CHANGES_AND_CONTINUE = 'save_changes_and_continue';
 
 const CustomerFormPage = () => {
     const { dispatch: panelDispatch } = useContext(PanelContext);
-    const { uuid = '' }: { uuid: string | undefined } = useParams();
+    const { uuid = '' }: any = useParams();
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [dataForm, setDataForm] = useState<DataFormInterface>();
