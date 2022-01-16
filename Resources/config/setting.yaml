@@ -1,0 +1,13 @@
+setting:
+    menu:
+        customer:
+            label: Customer
+            sort_order: 6000
+        customer.email_template:
+            label: Email template
+            parent: customer
+            # form_class: EveryWorkflow\SettingBundle\Form\General\WebSettingForm
+        customer.newsletter:
+            label: Newsletter
+            parent: customer
+            # form_class: EveryWorkflow\SettingBundle\Form\General\WebSettingForm

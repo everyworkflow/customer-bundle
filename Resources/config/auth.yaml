@@ -1,0 +1,7 @@
+auth:
+  permissions:
+    customer:
+      view: View Customer
+      list: List Customer
+      save: Save Customer
+      delete: Delete Customer
