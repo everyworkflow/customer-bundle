@@ -12,6 +12,7 @@ use EveryWorkflow\CoreBundle\Annotation\EwRoute;
 use EveryWorkflow\CustomerBundle\Repository\CustomerRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class GetCustomerController extends AbstractController
 {
@@ -37,7 +38,7 @@ class GetCustomerController extends AbstractController
             ]
         ]
     )]
-    public function __invoke(string $uuid = 'create'): JsonResponse
+    public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
     {
         $data = [];
 
@@ -48,7 +49,9 @@ class GetCustomerController extends AbstractController
             }
         }
 
-        $data['data_form'] = $this->customerRepository->getForm()->toArray();
+        if ($request->get('for') === 'data-form') {
+            $data['data_form'] = $this->customerRepository->getForm()->toArray();
+        }
 
         return new JsonResponse($data);
     }
